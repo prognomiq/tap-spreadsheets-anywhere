@@ -6,7 +6,7 @@ import xlrd
 
 LOGGER = logging.getLogger(__name__)
 
-def generator_wrapper(reader):
+def generator_wrapper(reader, no_key_formatting=False):
     header_row = None
     for row in reader:
         to_return = {}
@@ -20,9 +20,13 @@ def generator_wrapper(reader):
             if not formatted_key:
                 formatted_key = '' # default to empty string for key
             formatted_key = str(formatted_key)
-            # replace non-word characters with underscores
-            formatted_key = re.sub(r"\W+", '_', formatted_key)
-            to_return[formatted_key.lower()] = cell.value
+
+            if not no_key_formatting:
+                # replace non-word characters with underscores
+                formatted_key = re.sub(r"\W+", '_', formatted_key)
+                formatted_key = formatted_key.lower()
+
+            to_return[formatted_key] = cell.value
         yield to_return
 
 def get_legacy_row_iterator(table_spec, file_handle):
@@ -82,4 +86,6 @@ def get_row_iterator(table_spec, file_handle):
         except Exception as e:
             LOGGER.info(e)
             active_sheet = worksheets[0]
-    return generator_wrapper(active_sheet)
+
+    no_key_formatting = table_spec.get('no_key_formatting', False)
+    return generator_wrapper(active_sheet, no_key_formatting)

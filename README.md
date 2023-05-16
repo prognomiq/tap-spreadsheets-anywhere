@@ -116,6 +116,7 @@ Each object in the 'tables' array describes one or more CSV or Excel spreadsheet
 - **delimiter**: (optional) the delimiter to use when format is 'csv'. Defaults to a comma ',' but you can set delimiter to 'detect' to leverage the csv "Sniffer" for auto-detecting delimiter. 
 - **quotechar**: (optional) the character used to surround values that may contain delimiters - defaults to a double quote '"'
 - **json_path**: (optional) the JSON key under which the list of objets to use is located. Defaults to None, corresponding to an array at the top level of the JSON tree.
+- **no_key_formatting**: (optional) Don't remove or replace non-word characters in property keys.
 
 ### Automatic Config Generation
 
