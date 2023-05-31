@@ -122,6 +122,7 @@ def mp_readline(self, size=None, keepends=False):
 def get_row_iterator(table_spec, uri):
     universal_newlines = table_spec['universal_newlines'] if 'universal_newlines' in table_spec else True
     skip_initial = table_spec.get("skip_initial", 0)
+    skip_preceding = table_spec.get("skip_preceding", 0)
 
     if 'format' not in table_spec or table_spec['format'] == 'detect':
         lowered_uri = uri.lower()
@@ -154,6 +155,8 @@ def get_row_iterator(table_spec, uri):
     try:
         if format == 'csv':
             reader = get_streamreader(uri, universal_newlines=universal_newlines, open_mode='r')
+            for _ in range(skip_preceding):
+                reader.readline()
             iterator = tap_spreadsheets_anywhere.csv_handler.get_row_iterator(table_spec, reader)
         elif format == 'excel':
             reader = get_streamreader(uri, universal_newlines=universal_newlines,newline=None, open_mode='rb')

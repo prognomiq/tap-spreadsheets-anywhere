@@ -16,6 +16,7 @@ CONFIG_CONTRACT = Schema({
         Optional('invalid_format_action'): Any('ignore','fail'),
         Optional('universal_newlines'): bool,
         Optional('skip_initial'): int,
+        Optional('skip_preceding'): int,
         Optional('selected'): bool,
         Optional('field_names'): [str],
         Optional('search_prefix'): str,

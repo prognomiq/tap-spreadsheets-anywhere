@@ -104,6 +104,7 @@ Each object in the 'tables' array describes one or more CSV or Excel spreadsheet
 - **field_names**: (optional) An array holding the names of the columns in the targeted files. If not supplied, the first row of each file must hold the desired values. 
 - **universal_newlines**: (optional) Should the source file parsers honor [universal newlines](https://docs.python.org/2.3/whatsnew/node7.html)). Setting this to false will instruct the parser to only consider '\n' as a valid newline identifier.
 - **skip_initial**: (optional) How many lines should be skipped. The default is 0.
+- **skip_preceding**: (optional) How many lines should be skipped before encountering the header line. The default is 0.
 - **sample_rate**: (optional) The sampling rate to apply when reading a source file for sampling in discovery mode. A sampling rate of 1 will sample every line.  A sampling rate of 10 (the default) will sample every 10th line.
 - **max_sampling_read**: (optional) How many lines of the source file should be sampled when in discovery mode attempting to infer a schema. The default is 1000 samples.
 - **max_sampled_files**: (optional) The maximum number of files in the targeted set that will be sampled. The default is 5.
