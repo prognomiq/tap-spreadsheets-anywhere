@@ -132,7 +132,7 @@ def pick_datatype(counts, prefer_number_vs_integer=False):
     if len(counts) == 1:
         if counts.get('boolean', 0) > 0:
             to_return = 'boolean'
-        if counts.get('object', 0) > 0:
+        elif counts.get('object', 0) > 0:
             to_return = 'object'
         elif counts.get('integer', 0) > 0:
             to_return = 'number' if prefer_number_vs_integer else 'integer'
