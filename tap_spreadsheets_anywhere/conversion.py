@@ -38,7 +38,7 @@ def coerce(datum, declared_types):
 
 
 def bool_cast(value):
-    lower_value = str(value).lower()
+    lower_value = str(value).lower().strip()
     if lower_value in ["true", "yes"]:
         return True, True
     elif lower_value in ["false", "no"]:
