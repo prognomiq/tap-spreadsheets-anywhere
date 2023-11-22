@@ -12,7 +12,7 @@ def generator_wrapper(reader):
                 key = '_smart_extra'
             formatted_key = key
             # replace non-word characters with underscores
-            formatted_key = re.sub(r"\W+", '_', formatted_key)
+            formatted_key = re.sub(r"\W+", '_', formatted_key).strip('_')
             to_return[formatted_key.lower()] = value
         yield to_return
 

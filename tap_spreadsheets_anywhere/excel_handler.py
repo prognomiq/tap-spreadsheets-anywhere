@@ -23,7 +23,7 @@ def generator_wrapper(reader, no_key_formatting=False):
 
             if not no_key_formatting:
                 # replace non-word characters with underscores
-                formatted_key = re.sub(r"\W+", '_', formatted_key)
+                formatted_key = re.sub(r"\W+", '_', formatted_key).strip('_')
                 formatted_key = formatted_key.lower()
 
             to_return[formatted_key] = cell.value
