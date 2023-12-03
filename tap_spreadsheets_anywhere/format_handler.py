@@ -160,7 +160,9 @@ def get_row_iterator(table_spec, uri):
                 reader.readline()
             iterator = tap_spreadsheets_anywhere.csv_handler.get_row_iterator(table_spec, reader)
         elif format == 'excel':
-            reader = get_streamreader(uri, universal_newlines=universal_newlines,newline=None, open_mode='rb')
+            reader = get_streamreader(uri, universal_newlines=universal_newlines,newline=None, open_mode='rb',
+                                      # encoding must be None to prevent smart_open from ignoring binary mode
+                                      encoding=None)
             if uri.lower().endswith(".xls"):
                 iterator = tap_spreadsheets_anywhere.excel_handler.get_legacy_row_iterator(table_spec, reader)
             else:
