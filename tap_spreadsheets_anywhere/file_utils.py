@@ -38,7 +38,7 @@ def _hide_credentials(path):
     return path
 
 
-def write_file(target_filename, table_spec, schema, max_records=-1):
+def write_file(target_filename, table_spec, schema, max_records=-1, last_modified=None):
     LOGGER.info('Syncing file "{}".'.format(target_filename))
     target_uri = resolve_target_uri(table_spec, target_filename)
     records_synced = 0
@@ -51,6 +51,8 @@ def write_file(target_filename, table_spec, schema, max_records=-1):
                 # index zero, +1 for header row
                 '_smart_source_lineno': records_synced + 2
             }
+            if last_modified and table_spec.get('include_last_modified', False):
+                metadata['_smart_source_last_modified'] = last_modified
 
             try:
                 record_with_meta = {**conversion.convert_row(row, schema), **metadata}
