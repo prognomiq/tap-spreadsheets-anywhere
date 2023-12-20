@@ -116,10 +116,10 @@ def sync(config, state, catalog):
 
             records_streamed = 0
             for t_file in target_files:
-                max_records = max_records_per_run - records_streamed
-                if max_records_per_file > 0 and (max_records_per_file > max_records or max_records <= 0):
+                if max_records_per_file > 0:
                     max_records = max_records_per_file
-                    LOGGER.info(f'Processing up to {max_records_per_file} records from file {t_file["key"]}.')
+                else:
+                    max_records = max_records_per_run - records_streamed
 
                 records_streamed += file_utils.write_file(t_file['key'], table_spec, merged_schema, max_records=max_records)
 
