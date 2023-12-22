@@ -33,6 +33,7 @@ CONFIG_CONTRACT = Schema({
         Optional('prefer_number_vs_integer'): bool,
         Optional('prefer_schema_as_string'): bool,
         Optional('no_key_formatting'): bool,
+        Optional('include_last_modified'): bool,
         Optional('schema_overrides'): {
             str: {
                 Required('type'): Any(Any('null','string','integer','number','date-time'),
