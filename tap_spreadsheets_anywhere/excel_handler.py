@@ -3,11 +3,11 @@ import openpyxl
 import logging
 
 import xlrd
+from openpyxl.cell import Cell
 
 LOGGER = logging.getLogger(__name__)
 
-def generator_wrapper(reader, no_key_formatting=False):
-    header_row = None
+def generator_wrapper(reader, no_key_formatting=False, header_row=None):
     for row in reader:
         to_return = {}
         if header_row is None:
@@ -61,7 +61,7 @@ def get_legacy_row_iterator(table_spec, file_handle):
 
 def get_row_iterator(table_spec, file_handle):
     workbook = openpyxl.load_workbook(file_handle, read_only=True)
-    
+
     if "worksheet_name" in table_spec:
         try:
             active_sheet = workbook[table_spec["worksheet_name"]]
@@ -88,4 +88,11 @@ def get_row_iterator(table_spec, file_handle):
             active_sheet = worksheets[0]
 
     no_key_formatting = table_spec.get('no_key_formatting', False)
-    return generator_wrapper(active_sheet, no_key_formatting)
+
+    field_names = table_spec.get('field_names', None)
+    if field_names:
+        header_row = [Cell(active_sheet, value=f) for f in field_names]
+    else:
+        header_row = None
+
+    return generator_wrapper(active_sheet, no_key_formatting, header_row)
