@@ -78,7 +78,7 @@ def convert(datum, desired_type=None):
         except (ValueError, TypeError):
             pass
 
-    if desired_type == 'date-time':
+    if desired_type in (None, 'date-time'):
         try:
             to_return = dateutil.parser.parse(datum)
 
