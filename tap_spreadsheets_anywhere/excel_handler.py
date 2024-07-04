@@ -7,11 +7,12 @@ from openpyxl.cell import Cell
 
 LOGGER = logging.getLogger(__name__)
 
-def generator_wrapper(reader, no_key_formatting=False, header_row=None):
-    for row in reader:
+def generator_wrapper(reader, no_key_formatting=False, header_row=None, skip_preceding=0):
+    for row_index, row in enumerate(reader):
         to_return = {}
         if header_row is None:
-            header_row = row
+            if row_index >= skip_preceding:
+                header_row = row
             continue
 
         for index, cell in enumerate(row):
@@ -59,7 +60,7 @@ def get_legacy_row_iterator(table_spec, file_handle):
     return generator_wrapper(sheet.get_rows())
 
 
-def get_row_iterator(table_spec, file_handle):
+def get_row_iterator(table_spec, file_handle, skip_preceding=0):
     workbook = openpyxl.load_workbook(file_handle, read_only=True)
 
     if "worksheet_name" in table_spec:
@@ -95,4 +96,4 @@ def get_row_iterator(table_spec, file_handle):
     else:
         header_row = None
 
-    return generator_wrapper(active_sheet, no_key_formatting, header_row)
+    return generator_wrapper(active_sheet, no_key_formatting, header_row, skip_preceding)

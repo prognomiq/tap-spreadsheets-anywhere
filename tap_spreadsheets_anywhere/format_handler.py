@@ -166,7 +166,7 @@ def get_row_iterator(table_spec, uri):
             if uri.lower().endswith(".xls"):
                 iterator = tap_spreadsheets_anywhere.excel_handler.get_legacy_row_iterator(table_spec, reader)
             else:
-                iterator = tap_spreadsheets_anywhere.excel_handler.get_row_iterator(table_spec, reader)
+                iterator = tap_spreadsheets_anywhere.excel_handler.get_row_iterator(table_spec, reader, skip_preceding)
         elif format == 'json':
             reader = get_streamreader(uri, universal_newlines=universal_newlines, open_mode='r', encoding=encoding)
             iterator = tap_spreadsheets_anywhere.json_handler.get_row_iterator(table_spec, reader)
